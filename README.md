@@ -30,8 +30,8 @@ python team_balancer.py --input data/my_players.json
 ## 📋 Installation
 
 ```bash
-git clone https://github.com/yourusername/valorant-team-balancer.git
-cd valorant-team-balancer
+git clone https://github.com/MonsieurNikko/ValoTeamCrafting.git
+cd ValoTeamCrafting
 
 # No dependencies needed - uses Python standard library only!
 python team_balancer.py --help
@@ -115,10 +115,8 @@ python replace_player.py
 
 ## 📚 Documentation
 
-- **[Quick Reference](QUICK_REFERENCE.md)**: Common commands and examples
-- **[Project Structure](PROJECT_STRUCTURE.md)**: Detailed code organization
-- **[Contributing](CONTRIBUTING.md)**: How to contribute
-- **[Architecture](src/README.md)**: Module design and algorithm flow
+- **[Contributing](CONTRIBUTING.md)**: Guidelines for contributing to the project
+- **[Module Architecture](src/README.md)**: Detailed module design and algorithm flow
 
 ## 🧪 Testing
 
@@ -138,11 +136,16 @@ Tests cover:
 ## 🏗️ Project Structure
 
 ```
-src/           # Core modules (models, config, scoring, balancing, utils)
-tests/         # Unit tests
-data/          # Configuration and input data
-output/        # Generated results
-docs/          # Documentation
+src/              # Core modules (models, config, scoring, balancing, utils)
+tests/            # Unit tests
+data/             # Configuration and example player data
+  ├── config.json              # Algorithm configuration
+  ├── players_example.json     # Example dataset (30 players)
+  └── players_realistic.json   # Realistic dataset with smurfs
+output/           # Generated team results (JSON + TXT)
+analyze_balance.py    # Post-generation analysis tool
+replace_player.py     # Player replacement utility
+team_balancer.py      # Main CLI entry point
 ```
 
 ## ⚙️ Configuration
@@ -166,9 +169,8 @@ Inspired by the competitive Valorant community. Algorithm evolved through multip
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/valorant-team-balancer/issues)
-- **Documentation**: See `docs/` folder
-- **Quick Help**: Check [QUICK_REFERENCE.md](QUICK_REFERENCE.md)
+- **Issues**: [GitHub Issues](https://github.com/MonsieurNikko/ValoTeamCrafting/issues)
+- **Documentation**: See [CONTRIBUTING.md](CONTRIBUTING.md) and `src/README.md`
 
 ---
 
