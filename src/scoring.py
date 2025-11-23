@@ -10,6 +10,23 @@ def get_rank_group(rank: str) -> str:
     Determine which rank group a player belongs to (low/mid/high).
     Used for stats normalization.
     """
+    # Handle RR (Radiant Rating) format: "300RR" or "34RR"
+    if "RR" in rank:
+        try:
+            rr_value = int(rank.replace("RR", "").strip())
+            # All RR players are high elo (Immortal/Radiant)
+            # RR range: 0-99 = Immortal 1, 100-199 = Immortal 2, 200-299 = Immortal 3, 300+ = Radiant
+            if rr_value >= 300:
+                return "high"  # Radiant
+            elif rr_value >= 200:
+                return "high"  # Immortal 3
+            elif rr_value >= 100:
+                return "high"  # Immortal 2
+            else:
+                return "high"  # Immortal 1
+        except ValueError:
+            pass
+    
     rank_groups = get_config("rank_groups", {})
     for group_name, ranks in rank_groups.items():
         if rank in ranks:
@@ -26,8 +43,31 @@ def compute_rank_score(player: Player) -> float:
     Formula: rank_score = 0.6 * current + 0.4 * peak
     """
     rank_mapping = get_config("rank_score_mapping", {})
-    current_score = rank_mapping.get(player.rank_current, 50)
-    peak_score = rank_mapping.get(player.rank_peak_recent, 50)
+    
+    # Handle RR (Radiant Rating) format: "300RR" or "34RR"
+    def parse_rank_to_score(rank_str: str) -> int:
+        # Check if it's RR format (e.g., "300RR", "34RR")
+        if "RR" in rank_str:
+            try:
+                rr_value = int(rank_str.replace("RR", "").strip())
+                # RR players are high Immortal/Radiant
+                # 0-99 RR = Immortal 1, 100-199 = Immortal 2, 200-299 = Immortal 3, 300+ = Radiant
+                if rr_value >= 300:
+                    return rank_mapping.get("Radiant", 98)
+                elif rr_value >= 200:
+                    return rank_mapping.get("Immortal 3", 92)
+                elif rr_value >= 100:
+                    return rank_mapping.get("Immortal 2", 86)
+                else:
+                    return rank_mapping.get("Immortal 1", 80)
+            except ValueError:
+                pass
+        
+        # Normal rank string (e.g., "Ascendant 2")
+        return rank_mapping.get(rank_str, 50)
+    
+    current_score = parse_rank_to_score(player.rank_current)
+    peak_score = parse_rank_to_score(player.rank_peak_recent)
     
     rank_weights = get_config("rank_weights", {"current": 0.6, "peak": 0.4})
     rank_score = (rank_weights["current"] * current_score + 
