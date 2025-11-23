@@ -1,0 +1,7 @@
+# Liste des joueurs pour le tournoi
+# Format: PlayerName#TAG
+
+# Exemple (remplace par tes vrais joueurs):
+# PlayerName#EUW
+# AnotherPlayer#NA1
+# ThirdPlayer#ASIA
