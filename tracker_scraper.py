@@ -298,18 +298,22 @@ class TrackerScraperHuman:
         matches = await self.extract_matches_played(page)
         
         print(f"    - Level: {level}")
-        print(f"    - Matches this act: {matches}")
+        print(f"    - Matches: {matches}")
         
-        # Build stats dictionary
+        # Build stats dictionary (matching team_balancer.py format)
         stats = {
+            "player_name": "",  # Will be set in scrape_player()
             "rank_current": current_rank,
-            "rank_peak": peak_rank,
+            "rank_peak_recent": peak_rank,
             "kd_ratio": kd or 1.0,
             "average_combat_score": int(acs) if acs else 200,
             "win_rate": winrate or 50.0,
             "headshot_rate": headshot or 20.0,
             "account_level": level or 100,
-            "matches_played_current_act": matches or 50,
+            "total_ranked_matches": matches or 50,
+            "player_id": None,  # To be filled manually by admin
+            "admin_skill_rating": None,  # To be filled manually by admin
+            "admin_familiarity": None  # To be filled manually by admin
         }
         
         return stats

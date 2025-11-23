@@ -67,17 +67,27 @@ The scraper generates a JSON file compatible with `team_balancer.py`:
     {
       "player_name": "Ｎｉｋｋｏ#Han",
       "rank_current": "Ascendant 2",
-      "rank_peak": "Immortal 1",
+      "rank_peak_recent": "Immortal 1",
       "kd_ratio": 0.97,
       "average_combat_score": 218,
       "win_rate": 47.6,
       "headshot_rate": 27.7,
       "account_level": 463,
-      "matches_played_current_act": 164
+      "total_ranked_matches": 164,
+      "player_id": null,
+      "admin_skill_rating": null,
+      "admin_familiarity": null
     }
   ]
 }
 ```
+
+**Admin Fields (to be filled manually):**
+- `player_id`: Unique identifier for the player (optional)
+- `admin_skill_rating`: Manual skill rating from 1-10 (optional)
+- `admin_familiarity`: Team familiarity rating from 1-5 (optional)
+
+These fields are set to `null` by default and can be filled in later to fine-tune team balancing.
 
 ## 🔧 How It Works
 
